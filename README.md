@@ -1,5 +1,21 @@
-python_example
+pybind_sketching
 ==============
+
+# CHARLIE'S EDITS
+The environment to activate is `conda activate pybind-example`
+Note that the install command should be `pip install .`
+1. Changed module name to pybind_sketching
+2. After updating the c++ code, one should run the `./install_and_test.sh` executable script
+
+
+## To Do:
+1. Separate the source code into header and source files
+2. Rename the repository, files, and directories appropriately.
+3. Add more unit tests for other queries (point, range, heavy hitter, quantile).  See 
+   [here](https://barnasahadotcom.files.wordpress.com/2016/01/lec3-haritha-1.pdf) for a handy overview.
+
+
+
 
 [![Gitter][gitter-badge]][gitter-link]
 
