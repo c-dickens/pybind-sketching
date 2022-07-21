@@ -13,6 +13,8 @@ Note that the install command should be `pip install .`
 2. Rename the repository, files, and directories appropriately.
 3. Add more unit tests for other queries (point, range, heavy hitter, quantile).  See 
    [here](https://barnasahadotcom.files.wordpress.com/2016/01/lec3-haritha-1.pdf) for a handy overview.
+4. Add string functionality
+5. Add serialization?
 
 
 
