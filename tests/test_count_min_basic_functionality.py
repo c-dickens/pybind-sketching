@@ -91,9 +91,6 @@ def test_single_stream(make_data, make_count_min_with_seed):
     :return:
     :rtype:
     """
-    # number_of_items = 10
-    # data = [i for i in range(number_of_items)]
-    # frequencies = [1<<(number_of_items - i) for i in range(number_of_items)]
     data, frequencies = make_data
     c = make_count_min_with_seed["sketch"]
 
