@@ -138,6 +138,21 @@ public:
         return ceil(log(1.0/(1.0 - confidence))) ;
     } // End suggest_num_hashes
 
+    float get_relative_error(){
+        /*
+         * Returns the relative error (epsilon) parameter when the sketch has been initialised
+         */
+         return exp(1.0) / num_buckets ;
+    } // End get_epsilon()
+
+    float get_confidence(){
+        /*
+         * Returns the confiddenc= 1. - failure probability (confidence = 1 - delta) parameter when the sketch
+         * has been initialised
+         */
+         return float(1.0 - exp(-(double)num_hashes));
+    } // End get_epsilon()
+
     void merge(CountMinSketch &sketch){
         /*
          * Merges this sketch into that sketch by elementwise summing of buckets
@@ -158,7 +173,24 @@ public:
             }
         }
         total_weight += sketch.total_weight ;
-    }
+    } // End get_total_weight()
+
+    std::string to_string(){
+        /*
+         * Converts the sketch information to a string format
+         */
+        std::ostringstream os;
+        os          << "### CountMinSketch Summary:"  << std::endl ;
+        os          << " Depth (number of hashes) : " << get_num_hashes()  << std::endl ;
+        os          << " Width (number of buckets): " << get_num_buckets() << std::endl ;
+        os          << " Relative Error (epsilon) : " << get_relative_error() << std::endl ;
+        os          << " Confidence (1 - δ)       : " << get_confidence() << std::endl ;
+        os          << " Total weight in sketch   : " << get_total_weight() << std::endl ;
+        os          << " Seed                     : " << get_seed() << std::endl ;
+        os          << " Size estimate (in bits)  : " <<  get_size_estimate_in_bits() << std::endl ;
+        os          << "### End CountMinSketch Summary"  << std::endl ;
+        return os.str() ;
+    } // End to_string()
 
 
 
@@ -174,6 +206,19 @@ private:
     uint64_t mersenne_exponent = 31 ; // NB move this to a private value
     uint64_t large_prime = (1 << mersenne_exponent) - 1 ; // nb change this to a mersenne prime
     std::vector<uint64_t> a_hash_params, b_hash_params ; // Keep these public for preliminary testing
+
+    int64_t get_size_estimate_in_bits(){
+        /* Estimates the size in bits of the sketch
+         * Calculation
+         * 64 bits for seed
+         * 64 bits for the mersenne prime (technically we only use 32 bits here as currently written)
+         * 64 bits for every entry in the a and b array which are num_hashes long
+         * 64 bits for every entry in the table array, and there are num_hashes*num_buckets such entries
+         * 64 * ( 1 + 1 + 2*num_hashes + num_hashes*num_buckets)
+         *
+         */
+         return 64 * (1 + 1 + 2*num_hashes + num_hashes*num_buckets) ;
+    } // End get_size_estimate_in_bits
 
     void set_hash_parameters(){
         /* Sets the array containing a and b parameters for hashing.
@@ -253,11 +298,19 @@ PYBIND11_MODULE(pybind_sketching, m) {
         "Returns the smallest number of buckets that will guarantee the given relative_error.")
         .def_static("suggest_num_hashes", &CountMinSketch::suggest_num_hashes, py::arg("confidence"),
         "Returns the smallest number of hash functions that will guarantee the given confidence (1-failure probability.")
+        .def("get_relative_error", &CountMinSketch::get_relative_error,
+        "Returns the error upper bound of the sketch estimates.")
+        .def("get_confidence", &CountMinSketch::get_confidence,
+        "Returns the confidence (between 0.0 and 1.0) with which the estimates are returned.")
         .def("merge", &CountMinSketch::merge, py::arg("other_count_min"),
         "Returns other_count_min sketch into the current CountMinSketch object.")
         .def("__add__", &CountMinSketch::merge, py::arg("other_count_min"),
         "Returns other_count_min sketch into the current CountMinSketch object."\
-        "Note that this operation acts in place!");
+        "Note that this operation acts in place!")
+        .def("to_string", &CountMinSketch::to_string,
+        "Produces a string summary of the sketch")
+        .def("__str__", &CountMinSketch::to_string,
+        "Produces a string summary of the sketch");
 
 
 #ifdef VERSION_INFO

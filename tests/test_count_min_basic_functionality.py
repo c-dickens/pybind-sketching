@@ -4,6 +4,13 @@ import pytest
 import numpy as np
 from fixtures import fixed_sketch_setup, make_data, make_count_min_with_seed
 
+def test_string_methods(fixed_sketch_setup):
+    sketch_params = fixed_sketch_setup
+    c = CountMinSketch(*sketch_params)
+    summary = c.to_string()
+    print(summary)
+    print(c)
+
 def test_constructors(fixed_sketch_setup):
     """
     Tests the construction methods and basic funtionality such as getting bucket numbers or seed
@@ -62,9 +69,9 @@ def test_parameter_suggestions():
     :rtype:
     """
 
-    # Test number of bucket suggestions
-    errors = [0.2, 0.1, 0.05, 0.01]
-    buckets = [14, 28, 55, 272]
+    # Test number of bucket suggestions: w = ceil(e / epsilon)
+    errors = [0.2, 0.1, 0.05, 0.01, 1E-5]
+    buckets = [14, 28, 55, 272, 271829]
     for e, b in zip(errors, buckets):
         assert CountMinSketch.suggest_num_buckets(e) == b
     with pytest.raises(ValueError) as excinfo:
@@ -73,10 +80,11 @@ def test_parameter_suggestions():
         raise ValueError("Relative error must be at least 0.")
 
 
-    # NTest number of hashes suggestions
+    # NTest number of hashes suggestions: d = ceil ln(1 / delta) )
     assert CountMinSketch.suggest_num_hashes(0.682689492) == 2
     assert CountMinSketch.suggest_num_hashes(0.954499736) == 4
     assert CountMinSketch.suggest_num_hashes(0.997300204) == 6
+    assert CountMinSketch.suggest_num_hashes(1 - 1E-5) == 12
     for _ in [10.0, -1.0]:
         with pytest.raises(ValueError) as excinfo:
             CountMinSketch.suggest_num_hashes(_)

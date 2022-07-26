@@ -1,3 +1,3 @@
 pip install .
 cd tests
-pytest
+pytest -rP

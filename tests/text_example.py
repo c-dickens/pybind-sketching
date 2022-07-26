@@ -40,9 +40,9 @@ def main():
 
 
     # Now let's stream the data once more and add the items into the sketch.
-    n_buckets = CountMinSketch.suggest_num_buckets(0.1)
-    n_hashes = CountMinSketch.suggest_num_hashes(0.95)
-    sk = CountMinSketch(5, 5000, 100)
+    n_buckets = CountMinSketch.suggest_num_buckets(1E-3)
+    n_hashes = CountMinSketch.suggest_num_hashes(1-1E-4)
+    sk = CountMinSketch(n_hashes, n_buckets, 100)
 
 
     with tqdm.tqdm(total=os.path.getsize(file_name)) as progress_bar:
@@ -54,7 +54,6 @@ def main():
                     clean_word = ''.join(e for e in word if e.isalnum())  # remove non alphanumeric characters
                     clean_word = clean_word.lower()
                     clean_word_loc = word_count_map[clean_word]['index']
-                    #print(f'{clean_word}\t{clean_word_loc}')
                     sk.update(clean_word_loc)
 
     for word in word_count_map.keys():
@@ -66,6 +65,9 @@ def main():
     shakespeare_df.rename(columns={'level_0' : 'word', 'index' : 'map_index'}, inplace=True)
     shakespeare_df.reset_index(inplace=True)
     print(shakespeare_df.head(15))
+    print(sk)
+    table = np.array(sk.get_table())
+    np.save("cm_sketch.npy", table)
     fig, ax = plt.subplots()
     shakespeare_df.plot.scatter(x='index', y="count", ax=ax, c="blue", s=1.0, marker='.')
     shakespeare_df.plot.scatter(x='index', y="estimate", ax=ax, c="red", s=1.0, marker='^' )

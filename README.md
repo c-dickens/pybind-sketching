@@ -9,6 +9,7 @@ Note that the install command should be `pip install .`
 
 
 ## To Do:
+*Why would we want to use a CountMin rather than a frequent items sketch?*
 1. Separate the source code into header and source files
 2. Rename the repository, files, and directories appropriately.
 3. Add more unit tests for other queries (point, range, heavy hitter, quantile).  See 
@@ -17,10 +18,12 @@ Note that the install command should be `pip install .`
 4. Add string functionality
 5. Add serialization?
 6. Check the hash and bucket suggestor functions.  They seem to underestimate the number of each needed.
-7. Add a `to_string()` method and a `__str__`, and a `get_numpy_table()`.
+7. Add a `get_numpy_table()`.
 8. Use a better estimator as show [here](https://dl.acm.org/doi/10.1145/3219819.3219975)
 9. Measure update time and merge time.
 10. Optimise the performance using bitwise operations for the modular arithmetic.
+11. Scatter plot of error vs item frequency (which should be somewhat inverse of count vs frequency)
+12. Add catch into the src directory for direct c++ testing?
 
 
 
