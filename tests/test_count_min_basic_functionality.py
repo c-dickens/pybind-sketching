@@ -1,5 +1,3 @@
-#import pybind_sketching as m
-#from pybind_sketching import CountMinSketch
 from count_min_sketch import CountMinSketch
 import pytest
 import numpy as np

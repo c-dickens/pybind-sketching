@@ -17,11 +17,6 @@ __version__ = "0.0.1"
 #   reproducible builds (https://github.com/pybind/python_example/pull/53)
 
 ext_modules = [
-    # Pybind11Extension("pybind_sketching",
-    #     ["src/main.cpp"],
-    #     # Example: passing in the version to the compiled code
-    #     define_macros = [('VERSION_INFO', __version__)],
-    #     ),
     Pybind11Extension("count_min_sketch",
                       ["src/count_min_sketch_impl.cpp"],
                       # Example: passing in the version to the compiled code
