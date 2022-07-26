@@ -1,5 +1,5 @@
 import pytest
-from pybind_sketching import CountMinSketch
+from count_min_sketch import CountMinSketch
 
 @pytest.fixture
 def fixed_sketch_setup():

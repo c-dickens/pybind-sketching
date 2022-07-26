@@ -1,5 +1,6 @@
-import pybind_sketching as m
-from pybind_sketching import CountMinSketch
+#import pybind_sketching as m
+#from pybind_sketching import CountMinSketch
+from count_min_sketch import CountMinSketch
 import pytest
 import numpy as np
 from fixtures import fixed_sketch_setup, make_data, make_count_min_with_seed
