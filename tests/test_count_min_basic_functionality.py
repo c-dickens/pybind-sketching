@@ -3,12 +3,12 @@ import pytest
 import numpy as np
 from fixtures import fixed_sketch_setup, make_data, make_count_min_with_seed
 
-def test_string_methods(fixed_sketch_setup):
-    sketch_params = fixed_sketch_setup
-    c = CountMinSketch(*sketch_params)
-    summary = c.to_string()
-    print(summary)
-    print(c)
+# def test_string_methods(fixed_sketch_setup):
+#     sketch_params = fixed_sketch_setup
+#     c = CountMinSketch(*sketch_params)
+#     summary = c.to_string()
+#     print(summary)
+#     print(c)
 
 def test_constructors(fixed_sketch_setup):
     """
@@ -25,6 +25,7 @@ def test_constructors(fixed_sketch_setup):
     assert c.get_table_shape() == (num_hashes, num_buckets)
     assert c.get_config() == [num_hashes, num_buckets, seed]
     assert c.get_table() == [[0]*num_buckets]*num_hashes
+    assert c.get_total_weight() == 0
 
     # This line tells pytest that the next block should raise a TypeError exception.
     with pytest.raises(ValueError):

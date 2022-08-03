@@ -11,13 +11,11 @@ Note that the install command should be `pip install .`
 ## To Do:
 *Why would we want to use a CountMin rather than a frequent items sketch?*
 1. Separate the source code into header and source files
-2. Rename the repository, files, and directories appropriately.
 3. Add more unit tests for other queries (point, range, heavy hitter, quantile).  See 
    [here](https://barnasahadotcom.files.wordpress.com/2016/01/lec3-haritha-1.pdf) and 
    [here](https://crahen.github.io/algorithm/stream/count-min-sketch-point-query.html) for handy overviews.
 4. Add string functionality
 5. Add serialization?
-6. Check the hash and bucket suggestor functions.  They seem to underestimate the number of each needed.
 7. Add a `get_numpy_table()`.
 8. Use a better estimator as show [here](https://dl.acm.org/doi/10.1145/3219819.3219975)
 9. Measure update time and merge time.
