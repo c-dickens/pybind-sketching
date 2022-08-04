@@ -51,6 +51,8 @@ private:
     void set_hash_parameters() ;
     uint64_t get_bucket_hash(uint64_t item, uint64_t a, uint64_t b) ;
     int64_t get_size_estimate_in_bits() ;
+    uint64_t string_hash(const std::string& item) ;
+
 };
 
 

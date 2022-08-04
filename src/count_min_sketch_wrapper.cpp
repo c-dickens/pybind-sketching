@@ -22,23 +22,10 @@ PYBIND11_MODULE(count_min_sketch, m) {
         "Returns a copy of the sketch table as a list of python lists.") // Returning np arrays is harder so keep list.
         .def("get_total_weight", &CountMinSketch::get_total_weight,
         "Returns the total mass added to the stream.")
-//        .def("update", &CountMinSketch::update, py::arg("item"), py::arg("weight")=1,
-//        "Updates the sketch with a the item")
-//        .def("update", (void (CountMinSketch::*)(int64_t, int64_t)) &CountMinSketch::update, py::arg("weight")=1,
-//        "Updates the sketch with the item")
-//        .def("update", &CountMinSketch::update, py::arg("item"), py::arg("weight")=1,
-//        "Updates the sketch with the item")
         .def("update", (void (CountMinSketch::*)(uint64_t, int64_t)) &CountMinSketch::update, py::arg("item"), py::arg("weight")=1,
         "Updates the sketch with the item")
         .def("update", (void (CountMinSketch::*)(const std::string&, int64_t)) &CountMinSketch::update, py::arg("item"), py::arg("weight")=1,
         "Updates the sketch with the item")
-
-//.def("update", (void (hll_sketch::*)(double)) &hll_sketch::update, py::arg("datum"),
-//"Updates the sketch with the given floating point value")
-
-
-//.def("set", static_cast<void (Pet::*)(int)>(&Pet::set), "Set the pet's age")
-//.def("set", static_cast<void (Pet::*)(const std::string &)>(&Pet::set), "Set the pet's name");
         .def("get_estimate", (int64_t (CountMinSketch::*)(uint64_t)) &CountMinSketch::get_estimate, py::arg("item"),
         "Returns the frequency estimate for the given item.")
         .def("get_estimate", (int64_t (CountMinSketch::*)(const std::string&)) &CountMinSketch::get_estimate, py::arg("item"),

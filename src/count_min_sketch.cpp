@@ -68,7 +68,7 @@ std::vector<std::vector<int64_t>> CountMinSketch::get_table() {
         }
     }
     return sketch;
-} ;
+} ; // end get_config()
 
 void CountMinSketch::update(uint64_t item, int64_t weight){
     /*
@@ -81,7 +81,6 @@ void CountMinSketch::update(uint64_t item, int64_t weight){
     * TODO: We can improve the update time by removing the modulus operations as described in
     * Section 3: http://dimacs.rutgers.edu/~graham/pubs/papers/cmsoft.pdf
     */
-    std::cout << "The item is " << item << std::endl ;
     if(item < 0) {
         throw std::invalid_argument( "Item identifier must be nonnegative." ) ;
     };
@@ -95,12 +94,17 @@ void CountMinSketch::update(uint64_t item, int64_t weight){
     total_weight += weight ;
 } ; // End update function
 
+uint64_t CountMinSketch::string_hash(const std::string& item){
+    uint64_t hash_output[2];
+    const char *key = item.c_str(); // DON'T UNDERSTAND:: .c_str() converts string to pointer of the string
+    MurmurHash3_x64_128(key, (uint64_t)strlen(key), (uint32_t)seed, hash_output);
+    return hash_output[0];
+} ; // End string_hash()
+
 // void CountMinSketch::update(int64_t weight){
  void CountMinSketch::update(const std::string& item, int64_t weight){
-    uint64_t hash_output[2];  // allocate 128 bits.  We will just use the first 64 bits
-    const char *key = item.c_str(); // DON'T UNDERSTAND:: .c_str() converts string to pointer of the string
-    MurmurHash3_x64_128(key, (uint64_t)strlen(key), seed, hash_output);
-    update(hash_output[0], weight) ; // Only need to use the first 64 bits.
+    update(string_hash(item), weight) ;
+
 }
 
 int64_t CountMinSketch::get_estimate(uint64_t item) {
@@ -125,17 +129,7 @@ int64_t CountMinSketch::get_estimate(const std::string& item) {
      * TODO:  Can we explore the estimator from this paper?
      * https://dl.acm.org/doi/10.1145/3219819.3219975
      */
-    uint64_t hash_output[2];  // allocate 128 bits.  We will just use the first 64 bits
-    const char *key = item.c_str(); // DON'T UNDERSTAND:: .c_str() converts string to pointer of the string
-    MurmurHash3_x64_128(key, (uint64_t)strlen(key), seed, hash_output);
-//    int64_t estimate = std::numeric_limits<int64_t>::max() ; // start arbitrarily large
-//    for(uint64_t i=0; i < num_hashes; i++){
-//        uint64_t a = a_hash_params[i] ;
-//        uint64_t b = b_hash_params[i] ;
-//        uint64_t h = get_bucket_hash(item, a, b) ;
-//        estimate = std::min(estimate, table[i][h]) ;
-//    }
-    return get_estimate(hash_output[0]) ;
+    return get_estimate(string_hash(item)) ;
 } // end get_estimate()
 
 int64_t CountMinSketch::get_upper_bound(uint64_t item) {
