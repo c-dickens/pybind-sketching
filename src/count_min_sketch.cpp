@@ -142,6 +142,10 @@ int64_t CountMinSketch::get_upper_bound(uint64_t item) {
     return get_estimate(item) ;
 } // End get_upper_bound()
 
+int64_t CountMinSketch::get_upper_bound(const std::string& item) {
+    return get_estimate(string_hash(item)) ;
+} // End get_upper_bound()
+
 
 int64_t CountMinSketch::get_lower_bound(uint64_t item) {
     /*
@@ -151,6 +155,10 @@ int64_t CountMinSketch::get_lower_bound(uint64_t item) {
      * f_i >= est(f_i) - epsilon*||f||_1 with ||f||_1 being the total weight in the sketch.
      */
     return get_estimate(item) - epsilon*total_weight ;
+} // End get_lower_bound()
+
+int64_t CountMinSketch::get_lower_bound(const std::string& item) {
+    return get_estimate(string_hash(item)) - epsilon*total_weight ;
 } // End get_lower_bound()
 
 uint64_t CountMinSketch::suggest_num_hashes(float confidence){

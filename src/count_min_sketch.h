@@ -32,7 +32,9 @@ public:
     static uint64_t suggest_num_buckets(float relative_error) ;
     static uint64_t suggest_num_hashes(float confidence) ;
     int64_t get_upper_bound(uint64_t item) ;
+    int64_t get_upper_bound(const std::string& item) ;
     int64_t get_lower_bound(uint64_t item) ;
+    int64_t get_lower_bound(const std::string& item) ;
     const float get_relative_error() ;
     const float get_confidence() ;
     void merge(CountMinSketch &sketch) ;

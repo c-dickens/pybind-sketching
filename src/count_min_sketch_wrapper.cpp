@@ -30,10 +30,20 @@ PYBIND11_MODULE(count_min_sketch, m) {
         "Returns the frequency estimate for the given item.")
         .def("get_estimate", (int64_t (CountMinSketch::*)(const std::string&)) &CountMinSketch::get_estimate, py::arg("item"),
         "Returns the frequency estimate for the given item.")
-        .def("get_upper_bound", &CountMinSketch::get_upper_bound, py::arg("item"),
-        "Returns the frequency estimate upper bound for the given item.")
-        .def("get_lower_bound", &CountMinSketch::get_upper_bound, py::arg("item"),
-        "Returns the frequency estimate lower bound for the given item.")
+
+
+//        .def("get_upper_bound", &CountMinSketch::get_upper_bound, py::arg("item"),
+//        "Returns the frequency estimate upper bound for the given item.")
+        .def("get_upper_bound", (int64_t (CountMinSketch::*)(uint64_t)) &CountMinSketch::get_upper_bound,
+        py::arg("item"), "Updates the sketch with the item")
+        .def("get_upper_bound", (int64_t (CountMinSketch::*)(const std::string&)) &CountMinSketch::get_upper_bound,
+             py::arg("item"), "Updates the sketch with the item")
+//        .def("get_lower_bound", &CountMinSketch::get_upper_bound, py::arg("item"),
+//        "Returns the frequency estimate lower bound for the given item.")
+        .def("get_lower_bound", (int64_t (CountMinSketch::*)(uint64_t)) &CountMinSketch::get_lower_bound,
+        py::arg("item"), "Updates the sketch with the item")
+        .def("get_lower_bound", (int64_t (CountMinSketch::*)(const std::string&)) &CountMinSketch::get_lower_bound,
+        py::arg("item"), "Updates the sketch with the item")
         .def_static("suggest_num_buckets", &CountMinSketch::suggest_num_buckets, py::arg("relative_error"),
         "Returns the smallest number of buckets that will guarantee the given relative_error.")
         .def_static("suggest_num_hashes", &CountMinSketch::suggest_num_hashes, py::arg("confidence"),
