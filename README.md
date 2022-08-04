@@ -11,6 +11,7 @@ Note that the install command should be `pip install .`
 ## To Do:
 *Why would we want to use a CountMin rather than a frequent items sketch?*
 0. Check that the estimation functions should return uint or int
+0a. Add a streaming heap to keep a list of the current heavy items?   
 1. Separate the source code into header and source files
 3. Add more unit tests for other queries (point, range, heavy hitter, quantile).  See 
    [here](https://barnasahadotcom.files.wordpress.com/2016/01/lec3-haritha-1.pdf) and 
@@ -23,6 +24,7 @@ Note that the install command should be `pip install .`
 10. Optimise the performance using bitwise operations for the modular arithmetic.
 11. Scatter plot of error vs item frequency (which should be somewhat inverse of count vs frequency)
 12. Add catch into the src directory for direct c++ testing?
+
 
 
 
