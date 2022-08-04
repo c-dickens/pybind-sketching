@@ -96,7 +96,7 @@ void CountMinSketch::update(uint64_t item, int64_t weight){
 } ; // End update function
 
 // void CountMinSketch::update(int64_t weight){
- void CountMinSketch::update(std::string item, int64_t weight){
+ void CountMinSketch::update(const std::string& item, int64_t weight){
     uint64_t hash_output[2];  // allocate 128 bits.  We will just use the first 64 bits
     const char *key = item.c_str(); // DON'T UNDERSTAND:: .c_str() converts string to pointer of the string
     MurmurHash3_x64_128(key, (uint64_t)strlen(key), seed, hash_output);
@@ -119,7 +119,7 @@ int64_t CountMinSketch::get_estimate(uint64_t item) {
     return estimate ;
 } // end get_estimate()
 
-int64_t CountMinSketch::get_estimate(std::string item) {
+int64_t CountMinSketch::get_estimate(const std::string& item) {
     /*
      * Returns the estimate from the sketch for the given item.
      * TODO:  Can we explore the estimator from this paper?

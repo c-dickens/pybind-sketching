@@ -30,7 +30,7 @@ PYBIND11_MODULE(count_min_sketch, m) {
 //        "Updates the sketch with the item")
         .def("update", (void (CountMinSketch::*)(uint64_t, int64_t)) &CountMinSketch::update, py::arg("item"), py::arg("weight")=1,
         "Updates the sketch with the item")
-        .def("update", (void (CountMinSketch::*)(std::string, int64_t)) &CountMinSketch::update, py::arg("item"), py::arg("weight")=1,
+        .def("update", (void (CountMinSketch::*)(const std::string&, int64_t)) &CountMinSketch::update, py::arg("item"), py::arg("weight")=1,
         "Updates the sketch with the item")
 
 //.def("update", (void (hll_sketch::*)(double)) &hll_sketch::update, py::arg("datum"),
@@ -41,7 +41,7 @@ PYBIND11_MODULE(count_min_sketch, m) {
 //.def("set", static_cast<void (Pet::*)(const std::string &)>(&Pet::set), "Set the pet's name");
         .def("get_estimate", (int64_t (CountMinSketch::*)(uint64_t)) &CountMinSketch::get_estimate, py::arg("item"),
         "Returns the frequency estimate for the given item.")
-        .def("get_estimate", (int64_t (CountMinSketch::*)(std::string)) &CountMinSketch::get_estimate, py::arg("item"),
+        .def("get_estimate", (int64_t (CountMinSketch::*)(const std::string&)) &CountMinSketch::get_estimate, py::arg("item"),
         "Returns the frequency estimate for the given item.")
         .def("get_upper_bound", &CountMinSketch::get_upper_bound, py::arg("item"),
         "Returns the frequency estimate upper bound for the given item.")
