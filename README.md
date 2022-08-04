@@ -10,6 +10,7 @@ Note that the install command should be `pip install .`
 
 ## To Do:
 *Why would we want to use a CountMin rather than a frequent items sketch?*
+0. Check that the estimation functions should return uint or int
 1. Separate the source code into header and source files
 3. Add more unit tests for other queries (point, range, heavy hitter, quantile).  See 
    [here](https://barnasahadotcom.files.wordpress.com/2016/01/lec3-haritha-1.pdf) and 

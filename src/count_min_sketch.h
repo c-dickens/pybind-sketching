@@ -25,8 +25,10 @@ public:
     std::vector<uint64_t> get_config() ;
     std::vector<std::vector<int64_t>> get_table() ;
     int64_t get_total_weight() {return total_weight ; }
-    void update(int64_t item, int64_t weight=1) ;
+    void update(uint64_t item, int64_t weight=1) ;
+    void update(std::string, int64_t weight=1) ;
     int64_t get_estimate(uint64_t item) ;
+    int64_t get_estimate(std::string item) ;
     static uint64_t suggest_num_buckets(float relative_error) ;
     static uint64_t suggest_num_hashes(float confidence) ;
     int64_t get_upper_bound(uint64_t item) ;
@@ -35,8 +37,6 @@ public:
     const float get_confidence() ;
     void merge(CountMinSketch &sketch) ;
     std::string to_string() ;
-
-
 
 
 private:

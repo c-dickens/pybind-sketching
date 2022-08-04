@@ -19,7 +19,7 @@ __version__ = "0.0.1"
 ext_modules = [
     Pybind11Extension("count_min_sketch",
                       #["src/count_min_sketch_impl.cpp"],
-                      [ "src/cm_sketch_wrapper.cpp", "src/count_min_sketch.cpp"],
+                      [ "src/count_min_sketch_wrapper.cpp", "src/count_min_sketch.cpp", "src/MurmurHash3.cpp"],
                       # Example: passing in the version to the compiled code
                       define_macros=[('VERSION_INFO', __version__)],
                       ),
