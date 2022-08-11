@@ -31,8 +31,8 @@ def main():
                     clean_word = clean_word.lower()
                     word_dict[clean_word] += 1
                     sk.update(clean_word)
-    word_count__est_list = [(k, v, sk.get_estimate(k)) for k, v in word_dict.items()]
-    shakespeare_df = pd.DataFrame(word_count__est_list, columns=['word', 'count', 'estimate'])
+    word_count_est_list = [(k, v, sk.get_estimate(k)) for k, v in word_dict.items()]
+    shakespeare_df = pd.DataFrame(word_count_est_list, columns=['word', 'count', 'estimate'])
     shakespeare_df.sort_values(by="count", ascending=False, inplace=True)
     print(shakespeare_df)
 
